@@ -8,7 +8,6 @@ from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Input, LSTM, Dense, Attention, Concatenate, Bidirectional
 from tensorflow.keras.layers import LSTM, Dense, Input, Bidirectional, TimeDistributed
 from keras.callbacks import ModelCheckpoint, ReduceLROnPlateau, EarlyStopping
-from tensorflow.keras.losses import MeanSquaredError
 from datetime import datetime
 import os
 
@@ -113,12 +112,11 @@ train_loss = history.history['loss']
 val_loss = history.history['val_loss']
 train_acc = history.history['accuracy']
 val_acc = history.history['val_accuracy']
-lr = history.history['lr']
 
 file_m = 'output' + "/" + "metrics_" + data_id +".csv"
 
 with open(file_m, 'w') as file:
-    file.write('Epoch\tTrain_Loss\tVal_Loss\tTrain_Acc\tVal_Acc\tLR\n')
-    min_len = min(len(train_loss), len(val_loss), len(train_acc), len(val_acc), len(lr))
+    file.write('Epoch\tTrain_Loss\tVal_Loss\tTrain_Acc\tVal_Acc\n')
+    min_len = min(len(train_loss), len(val_loss), len(train_acc), len(val_acc))
     for epoch in range(min_len):
-        file.write(f'{epoch+1}\t{train_loss[epoch]}\t{val_loss[epoch]}\t{train_acc[epoch]}\t{val_acc[epoch]}\t{lr[epoch]}\n')
+        file.write(f'{epoch+1}\t{train_loss[epoch]}\t{val_loss[epoch]}\t{train_acc[epoch]}\t{val_acc[epoch]}\n')
